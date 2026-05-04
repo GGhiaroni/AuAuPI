@@ -1,8 +1,16 @@
 package com.GabrielTiziano.AuAuPI.core.entities.enums;
 
-import lombok.Getter;
-
 public enum Sexo {
-    MACHO,
-    FEMEA
+    MACHO("Macho"),
+    FEMEA("Fêmea");
+
+    private final String descricao;
+
+    Sexo(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String descricao() {
+        return descricao;
+    }
 }

@@ -1,8 +1,5 @@
 package com.GabrielTiziano.AuAuPI.core.entities.enums;
 
-import lombok.Getter;
-
-@Getter
 public enum StatusReserva {
     PENDENTE("Reserva pendente."),
     CONFIRMADA("Reserva confirmada."),
@@ -10,9 +7,13 @@ public enum StatusReserva {
     FINALIZADA("Reserva finalizada."),
     CANCELADA("Reserva cancelada.");
 
-    private final String description;
+    private final String descricao;
 
-    StatusReserva(String description) {
-        this.description = description;
+    StatusReserva(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String descricao(){
+        return descricao;
     }
 }
