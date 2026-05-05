@@ -1,9 +1,7 @@
 package com.GabrielTiziano.AuAuPI.infra.persistence;
 
-import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,11 +37,10 @@ public class TutorEntity {
     @Column(nullable = false, length = 200)
     private String endereco;
 
-    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<Cachorro> cachorros = new ArrayList<>();
+    private List<CachorroEntity> cachorros = new ArrayList<>();
 }

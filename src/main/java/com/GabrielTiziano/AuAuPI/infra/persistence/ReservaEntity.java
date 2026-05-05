@@ -1,13 +1,11 @@
 package com.GabrielTiziano.AuAuPI.infra.persistence;
 
-import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
 import com.GabrielTiziano.AuAuPI.core.enums.StatusReserva;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "reserva")
@@ -26,7 +24,7 @@ public class ReservaEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_cachorro", nullable = false)
-    private Cachorro cachorro;
+    private CachorroEntity cachorro;
 
     @Column(name = "data_checkin", nullable = false)
     private LocalDate dataCheckin;
@@ -43,12 +41,4 @@ public class ReservaEntity {
 
     @Column(columnDefinition = "TEXT")
     private String observacoes;
-
-    public long calcularQuantidadeDiarias() {
-        return ChronoUnit.DAYS.between(dataCheckin, dataCheckout);
-    }
-
-    public BigDecimal calcularValorTotal() {
-        return valorDiaria.multiply(BigDecimal.valueOf(calcularQuantidadeDiarias()));
-    }
 }

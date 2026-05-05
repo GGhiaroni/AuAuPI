@@ -11,7 +11,7 @@ public record Cachorro(
         String raca,
         Porte porte,
         Double peso,
-        LocalDate dataDeNascimento,
+        LocalDate dataNascimento,
         Sexo sexo,
         boolean castrado,
         String observacoesMedicas,

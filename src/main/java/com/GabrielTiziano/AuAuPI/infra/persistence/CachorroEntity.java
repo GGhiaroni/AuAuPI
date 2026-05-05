@@ -1,7 +1,5 @@
 package com.GabrielTiziano.AuAuPI.infra.persistence;
 
-import com.GabrielTiziano.AuAuPI.core.entities.Reserva;
-import com.GabrielTiziano.AuAuPI.core.entities.Tutor;
 import com.GabrielTiziano.AuAuPI.core.enums.Porte;
 import com.GabrielTiziano.AuAuPI.core.enums.Sexo;
 import jakarta.persistence.*;
@@ -53,9 +51,9 @@ public class CachorroEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_tutor", nullable = false)
-    private Tutor tutor;
+    private TutorEntity tutor;
 
     @OneToMany(mappedBy = "cachorro", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<Reserva> reservas = new ArrayList<>();
+    private List<ReservaEntity> reservas = new ArrayList<>();
 }
