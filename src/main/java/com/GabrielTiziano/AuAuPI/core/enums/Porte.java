@@ -1,4 +1,4 @@
-package com.GabrielTiziano.AuAuPI.core.entities.enums;
+package com.GabrielTiziano.AuAuPI.core.enums;
 
 public enum Porte {
     PEQUENO("Cachorro de porte pequeno, abaixo de 10kg."),
