@@ -1,4 +1,4 @@
-package com.GabrielTiziano.AuAuPI.infra.dto;
+package com.GabrielTiziano.AuAuPI.infra.dto.request;
 
 import com.GabrielTiziano.AuAuPI.core.enums.Porte;
 import com.GabrielTiziano.AuAuPI.core.enums.Sexo;

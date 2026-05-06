@@ -1,4 +1,4 @@
-package com.GabrielTiziano.AuAuPI.infra.dto;
+package com.GabrielTiziano.AuAuPI.infra.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
