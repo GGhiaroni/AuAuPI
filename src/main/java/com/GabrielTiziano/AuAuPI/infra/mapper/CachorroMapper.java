@@ -3,6 +3,7 @@ package com.GabrielTiziano.AuAuPI.infra.mapper;
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarCachorroRequest;
 import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResponse;
+import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResumoResponse;
 import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResumoResponse;
 import com.GabrielTiziano.AuAuPI.infra.persistence.CachorroEntity;
 import com.GabrielTiziano.AuAuPI.infra.persistence.TutorEntity;
@@ -68,5 +69,13 @@ public class CachorroMapper {
                 .build();
     }
 
-
+    public static CachorroResumoResponse toResumoResponse(Cachorro cachorro){
+        return new CachorroResumoResponse(
+                cachorro.id(),
+                cachorro.nome(),
+                cachorro.raca(),
+                cachorro.porte(),
+                cachorro.peso()
+        );
+    }
 }
