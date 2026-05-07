@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public record CachorroResumoResponse(
         Long id,
         String nome,
+        String raca,
         Porte porte,
         Double peso
 ) {
