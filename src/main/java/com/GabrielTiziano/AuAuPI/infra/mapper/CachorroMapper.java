@@ -8,6 +8,8 @@ import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResumoResponse;
 import com.GabrielTiziano.AuAuPI.infra.persistence.CachorroEntity;
 import com.GabrielTiziano.AuAuPI.infra.persistence.TutorEntity;
 
+import java.util.Optional;
+
 public class CachorroMapper {
     public static Cachorro toDomain(CriarCachorroRequest dto) {
         return new Cachorro(
