@@ -9,7 +9,7 @@ public interface CachorroGateway {
     Cachorro save(Cachorro cachorro);
     Optional<Cachorro> findById(Long id);
     List<Cachorro> findAll();
-    List<Cachorro> findByIdTutor(Long idTutor);
+    List<Cachorro> findByTutorId(Long idTutor);
     void deleteById(Long id);
     boolean existsById(Long id);
 }
