@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class BeanConfiguration {
+public class CachorroBeanConfiguration {
     @Bean
     public CriarCachorroCase criarCachorroCase(CachorroGateway cachorroGateway, TutorGateway tutorGateway) {
         return new CriarCachorroCaseImpl(cachorroGateway, tutorGateway);
