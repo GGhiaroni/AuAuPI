@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class TutorRepositoryGateway implements TutorGateway {
     }
 
     @Override
-    public Optional<Tutor> findById(Long id) {
+    public boolean findById(Long id) {
         return tutorRepository.findById(id)
                 .map(TutorMapper::toDomain);
     }
