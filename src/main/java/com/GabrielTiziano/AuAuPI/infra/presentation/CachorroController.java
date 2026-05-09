@@ -6,7 +6,6 @@ import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.CriarCachorroCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.tutor.BuscarTutorPorIdCase;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarCachorroRequest;
 import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResponse;
-import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResumoResponse;
 import com.GabrielTiziano.AuAuPI.infra.mapper.CachorroMapper;
 import com.GabrielTiziano.AuAuPI.infra.mapper.TutorMapper;
 import jakarta.validation.Valid;
