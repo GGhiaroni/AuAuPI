@@ -22,6 +22,7 @@ public class TutorController {
     private final CriarTutorCase criarTutorCase;
     private final AtualizarTutorPorIdCase atualizarTutorPorIdCase;
     private final DeletarTutorPorIdCase deletarTutorPorIdCase;
+    private final  BuscarTutorPorCpfCase buscarTutorPorCpfCase;
 
     @GetMapping
     public ResponseEntity<List<TutorResponse>> listarTutores() {
@@ -54,5 +55,10 @@ public class TutorController {
     public ResponseEntity<Void> deletarTutor(@PathVariable Long id) {
         deletarTutorPorIdCase.execute(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<TutorResponse> buscarTutorPorCpf(@PathVariable String cpf){
+        return ResponseEntity.ok(TutorMapper.toResponse(buscarTutorPorCpfCase.execute(cpf)));
     }
 }
