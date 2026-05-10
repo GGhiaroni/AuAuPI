@@ -20,17 +20,19 @@ public class AtualizarTutorPorIdCaseImpl implements AtualizarTutorPorIdCase{
             throw new IllegalArgumentException("Não foi possível localizar um tutor de id " + id + ".");
         }
 
-        if (!tutorExistente.get().cpf().equals(tutor.cpf())
-                && tutorGateway.existsByCpf(tutor.cpf())) {
+        String cpfNormalizado = tutor.cpf().replaceAll("[^0-9]", "");
+
+        if (!tutorExistente.get().cpf().equals(cpfNormalizado)
+                && tutorGateway.existsByCpf(cpfNormalizado)) {
             throw new IllegalArgumentException(
-                    "CPF " + tutor.cpf() + " já está cadastrado por outro tutor."
+                    "CPF " + cpfNormalizado + " já está cadastrado por outro tutor."
             );
         }
 
         Tutor tutorASalvar = new Tutor(
           tutorExistente.get().id(),
                 tutor.nome(),
-                tutor.cpf(),
+                cpfNormalizado,
                 tutor.email(),
                 tutor.endereco(),
                 tutor.telefone(),

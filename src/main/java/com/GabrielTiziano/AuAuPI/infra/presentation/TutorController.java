@@ -7,8 +7,10 @@ import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResponse;
 import com.GabrielTiziano.AuAuPI.infra.mapper.TutorMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +18,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/tutores")
 @RequiredArgsConstructor
+@Validated
 public class TutorController {
     private final ListarTutoresCase listarTutoresCase;
     private final BuscarTutorPorIdCase buscarTutorPorIdCase;
     private final CriarTutorCase criarTutorCase;
     private final AtualizarTutorPorIdCase atualizarTutorPorIdCase;
     private final DeletarTutorPorIdCase deletarTutorPorIdCase;
+    private final BuscarTutorPorCpfCase buscarTutorPorCpfCase;
 
     @GetMapping
     public ResponseEntity<List<TutorResponse>> listarTutores() {
@@ -34,7 +38,7 @@ public class TutorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TutorResponse> buscarTutorPorId(@PathVariable Long id){
+    public ResponseEntity<TutorResponse> buscarTutorPorId(@PathVariable Long id) {
         return ResponseEntity.ok(TutorMapper.toResponse(buscarTutorPorIdCase.execute(id)));
     }
 
@@ -45,7 +49,7 @@ public class TutorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TutorResponse> atualizarTutor(@PathVariable Long id, @Valid @RequestBody CriarTutorRequest dto){
+    public ResponseEntity<TutorResponse> atualizarTutor(@PathVariable Long id, @Valid @RequestBody CriarTutorRequest dto) {
         Tutor tutorAtualizado = atualizarTutorPorIdCase.execute(id, TutorMapper.toDomain(dto));
         return ResponseEntity.ok(TutorMapper.toResponse(tutorAtualizado));
     }
@@ -54,5 +58,13 @@ public class TutorController {
     public ResponseEntity<Void> deletarTutor(@PathVariable Long id) {
         deletarTutorPorIdCase.execute(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<TutorResponse> buscarTutorPorCpf(
+            @PathVariable
+            @CPF(message = "CPF inválido.")
+            String cpf) {
+        return ResponseEntity.ok(TutorMapper.toResponse(buscarTutorPorCpfCase.execute(cpf)));
     }
 }

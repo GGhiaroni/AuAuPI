@@ -14,16 +14,17 @@ public class CriarTutorCaseImpl implements  CriarTutorCase{
 
     @Override
     public Tutor execute(Tutor tutor) {
-        if(tutorGateway.existsByCpf(tutor.cpf())){
+        String cpfNormalizado = tutor.cpf().replaceAll("[^0-9]", "");
+        if(tutorGateway.existsByCpf(cpfNormalizado)){
             throw new IllegalArgumentException(
-                    "Tutor com CPF: " + tutor.cpf() + " já cadastrado."
+                    "Tutor com CPF: " + cpfNormalizado + " já cadastrado."
             );
         }
 
         Tutor tutorASalvar = new Tutor(
                 null,
                 tutor.nome(),
-                tutor.cpf(),
+                cpfNormalizado,
                 tutor.email(),
                 tutor.endereco(),
                 tutor.telefone(),

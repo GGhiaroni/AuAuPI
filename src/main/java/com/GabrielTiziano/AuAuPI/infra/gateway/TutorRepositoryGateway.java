@@ -49,4 +49,10 @@ public class TutorRepositoryGateway implements TutorGateway {
     public boolean existsByCpf(String cpf) {
         return tutorRepository.existsByCpf(cpf);
     }
+
+    @Override
+    public Optional<Tutor> findByCpf(String cpf) {
+        return tutorRepository.findByCpf(cpf)
+                .map(TutorMapper::toDomain);
+    }
 }
