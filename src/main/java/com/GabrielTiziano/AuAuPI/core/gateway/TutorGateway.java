@@ -12,4 +12,5 @@ public interface TutorGateway {
     void deleteById(Long id);
     boolean existsById(Long id);
     boolean existsByCpf(String cpf);
+    Optional<Tutor> findByCpf(String cpf);
 }
