@@ -31,4 +31,9 @@ public class TutorBeanConfiguration {
     AtualizarTutorPorIdCase atualizarTutorPorIdCase(TutorGateway tutorGateway){
         return new AtualizarTutorPorIdCaseImpl(tutorGateway);
     }
+
+    @Bean
+    BuscarTutorPorCpfCase buscarTutorPorCpfCase(TutorGateway tutorGateway){
+        return new BuscarTutorPorCpfCaseImpl(tutorGateway);
+    }
 }
