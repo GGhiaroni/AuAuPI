@@ -12,7 +12,9 @@ public class BuscarTutorPorCpfCaseImpl implements BuscarTutorPorCpfCase {
 
     @Override
     public Tutor execute(String cpf) {
-        return tutorGateway.findByCpf(cpf) .orElseThrow(() -> new IllegalArgumentException(
+        String cpfNormalizado = cpf.replaceAll("[^0-9]", "");
+
+        return tutorGateway.findByCpf(cpfNormalizado) .orElseThrow(() -> new IllegalArgumentException(
                 "Tutor de CPF: " + cpf + " não encontrado."
         ));
     }
