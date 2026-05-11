@@ -18,8 +18,8 @@ public class TutorRepositoryGateway implements TutorGateway {
 
     @Override
     public Tutor save(Tutor tutor) {
-       TutorEntity entitySalva = tutorRepository.save(TutorMapper.toEntity(tutor));
-       return TutorMapper.toDomain(entitySalva);
+        TutorEntity entitySalva = tutorRepository.save(TutorMapper.toEntity(tutor));
+        return TutorMapper.toDomain(entitySalva);
     }
 
     @Override
@@ -54,5 +54,13 @@ public class TutorRepositoryGateway implements TutorGateway {
     public Optional<Tutor> findByCpf(String cpf) {
         return tutorRepository.findByCpf(cpf)
                 .map(TutorMapper::toDomain);
+    }
+
+    @Override
+    public List<Tutor> findByNomeParcial(String nome) {
+        return tutorRepository.findByNomeContainingIgnoreCase(nome)
+                .stream()
+                .map(TutorMapper::toDomain)
+                .toList();
     }
 }
