@@ -27,4 +27,9 @@ public class CachorroBeanConfiguration {
     public ListarCachorrosCase listarCachorrosCase(CachorroGateway cachorroGateway){
         return new ListarCachorrosCaseImpl(cachorroGateway);
     }
+
+    @Bean
+    public DeletarCachorroCase deletarCachorroCase(CachorroGateway cachorroGateway){
+        return new DeletarCachorroCaseImpl(cachorroGateway);
+    }
 }
