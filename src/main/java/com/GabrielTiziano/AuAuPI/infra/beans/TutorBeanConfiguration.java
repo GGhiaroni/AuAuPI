@@ -36,4 +36,9 @@ public class TutorBeanConfiguration {
     BuscarTutorPorCpfCase buscarTutorPorCpfCase(TutorGateway tutorGateway){
         return new BuscarTutorPorCpfCaseImpl(tutorGateway);
     }
+
+    @Bean
+    BuscarTutorPorNomeCase buscarTutorPorNomeCase(TutorGateway tutorGateway){
+        return new BuscarTutorPorNomeCaseImpl(tutorGateway);
+    }
 }
