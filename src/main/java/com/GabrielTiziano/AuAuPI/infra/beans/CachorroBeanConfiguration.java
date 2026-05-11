@@ -29,6 +29,11 @@ public class CachorroBeanConfiguration {
     }
 
     @Bean
+    public AtualizarCachorroCase atualizarCachorroCase(CachorroGateway cachorroGateway){
+        return new AtualizarCachorroCaseImpl(cachorroGateway);
+    }
+
+    @Bean
     public DeletarCachorroCase deletarCachorroCase(CachorroGateway cachorroGateway){
         return new DeletarCachorroCaseImpl(cachorroGateway);
     }
