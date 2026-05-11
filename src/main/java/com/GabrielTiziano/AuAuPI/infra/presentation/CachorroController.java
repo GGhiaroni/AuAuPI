@@ -2,11 +2,13 @@ package com.GabrielTiziano.AuAuPI.infra.presentation;
 
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
 import com.GabrielTiziano.AuAuPI.core.entities.Tutor;
+import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.BuscarCachorroPorIdCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.CriarCachorroCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.ListarCachorrosCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.tutor.BuscarTutorPorIdCase;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarCachorroRequest;
 import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResponse;
+import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResumoResponse;
 import com.GabrielTiziano.AuAuPI.infra.mapper.CachorroMapper;
 import com.GabrielTiziano.AuAuPI.infra.mapper.TutorMapper;
 import jakarta.validation.Valid;
@@ -26,6 +28,7 @@ public class CachorroController {
     private final CriarCachorroCase criarCachorroCase;
     private final BuscarTutorPorIdCase buscarTutorPorIdCase;
     private final ListarCachorrosCase listarCachorrosCase;
+    private final BuscarCachorroPorIdCase buscarCachorroPorIdCase;
 
     @GetMapping
     public ResponseEntity<List<CachorroResponse>> listarCachorros() {
@@ -38,6 +41,15 @@ public class CachorroController {
                 .toList();
 
         return ResponseEntity.ok(cachorroResponseList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CachorroResponse> buscarCachorroPorId(@PathVariable Long id){
+        Cachorro cachorro = buscarCachorroPorIdCase.execute(id);
+        Tutor tutor = buscarTutorPorIdCase.execute(cachorro.idTutor());
+        TutorResumoResponse tutorResumoResponse = new TutorResumoResponse(tutor.id(), tutor.nome(), tutor.telefone());
+
+        return ResponseEntity.ok(CachorroMapper.toResponse(cachorro, tutorResumoResponse));
     }
 
     @PostMapping
