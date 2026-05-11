@@ -29,12 +29,17 @@ public class CachorroBeanConfiguration {
     }
 
     @Bean
-    public AtualizarCachorroCase atualizarCachorroCase(CachorroGateway cachorroGateway){
-        return new AtualizarCachorroCaseImpl(cachorroGateway);
+    public AtualizarCachorroCase atualizarCachorroCase(CachorroGateway cachorroGateway, TutorGateway tutorGateway){
+        return new AtualizarCachorroCaseImpl(cachorroGateway, tutorGateway);
     }
 
     @Bean
     public DeletarCachorroCase deletarCachorroCase(CachorroGateway cachorroGateway){
         return new DeletarCachorroCaseImpl(cachorroGateway);
+    }
+
+    @Bean
+    public ListarCachorrosPorPorteCase listarCachorrosPorPorteCase(CachorroGateway cachorroGateway){
+        return new ListarCachorrosPorPorteCaseImpl(cachorroGateway);
     }
 }
