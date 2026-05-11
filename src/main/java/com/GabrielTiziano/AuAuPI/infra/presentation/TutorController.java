@@ -1,9 +1,14 @@
 package com.GabrielTiziano.AuAuPI.infra.presentation;
 
+import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
 import com.GabrielTiziano.AuAuPI.core.entities.Tutor;
+import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.ListarCachorrosPorTutorCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.tutor.*;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarTutorRequest;
+import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResponse;
 import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResponse;
+import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResumoResponse;
+import com.GabrielTiziano.AuAuPI.infra.mapper.CachorroMapper;
 import com.GabrielTiziano.AuAuPI.infra.mapper.TutorMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +31,7 @@ public class TutorController {
     private final AtualizarTutorPorIdCase atualizarTutorPorIdCase;
     private final DeletarTutorPorIdCase deletarTutorPorIdCase;
     private final BuscarTutorPorCpfCase buscarTutorPorCpfCase;
+    private final ListarCachorrosPorTutorCase listarCachorrosPorTutorCase;
 
     @GetMapping
     public ResponseEntity<List<TutorResponse>> listarTutores() {
@@ -66,5 +72,19 @@ public class TutorController {
             @CPF(message = "CPF inválido.")
             String cpf) {
         return ResponseEntity.ok(TutorMapper.toResponse(buscarTutorPorCpfCase.execute(cpf)));
+    }
+
+    @GetMapping("/{id}/cachorros")
+    public ResponseEntity<List<CachorroResponse>> listarCachorrosDeUmTutor(@PathVariable Long id){
+        List<Cachorro> cachorroList = listarCachorrosPorTutorCase.execute(id);
+
+        Tutor tutor = buscarTutorPorIdCase.execute(id);
+        TutorResumoResponse tutorResumo = TutorMapper.toResumoResponse(tutor);
+
+        List<CachorroResponse> response = cachorroList.stream()
+                .map(cachorro -> CachorroMapper.toResponse(cachorro, tutorResumo))
+                .toList();
+
+        return ResponseEntity.ok(response);
     }
 }
