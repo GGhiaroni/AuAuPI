@@ -22,4 +22,9 @@ public class CachorroBeanConfiguration {
     public ListarCachorrosPorTutorCase listarCachorrosPorTutorCase(TutorGateway tutorGateway, CachorroGateway cachorroGateway){
         return new ListarCachorrosPorTutorCaseImpl(tutorGateway, cachorroGateway);
     }
+
+    @Bean
+    public ListarCachorrosCase listarCachorrosCase(CachorroGateway cachorroGateway){
+        return new ListarCachorrosCaseImpl(cachorroGateway);
+    }
 }
