@@ -5,5 +5,5 @@ import com.GabrielTiziano.AuAuPI.core.entities.Tutor;
 import java.util.List;
 
 public interface BuscarTutorPorNomeCase {
-    public List<Tutor> execute(String nome);
+    List<Tutor> execute(String nome);
 }
