@@ -2,10 +2,7 @@ package com.GabrielTiziano.AuAuPI.infra.presentation;
 
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
 import com.GabrielTiziano.AuAuPI.core.entities.Tutor;
-import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.BuscarCachorroPorIdCase;
-import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.CriarCachorroCase;
-import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.DeletarCachorroCase;
-import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.ListarCachorrosCase;
+import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.*;
 import com.GabrielTiziano.AuAuPI.core.usecases.tutor.BuscarTutorPorIdCase;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarCachorroRequest;
 import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResponse;
@@ -20,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @RestController
 @RequestMapping("/cachorros")
 @RequiredArgsConstructor
@@ -31,6 +26,7 @@ public class CachorroController {
     private final ListarCachorrosCase listarCachorrosCase;
     private final BuscarCachorroPorIdCase buscarCachorroPorIdCase;
     private final DeletarCachorroCase deletarCachorroCase;
+    private final AtualizarCachorroCase atualizarCachorroCase;
 
     @GetMapping
     public ResponseEntity<List<CachorroResponse>> listarCachorros() {
@@ -46,7 +42,7 @@ public class CachorroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CachorroResponse> buscarCachorroPorId(@PathVariable Long id){
+    public ResponseEntity<CachorroResponse> buscarCachorroPorId(@PathVariable Long id) {
         Cachorro cachorro = buscarCachorroPorIdCase.execute(id);
         Tutor tutor = buscarTutorPorIdCase.execute(cachorro.idTutor());
         TutorResumoResponse tutorResumoResponse = new TutorResumoResponse(tutor.id(), tutor.nome(), tutor.telefone());
@@ -63,8 +59,16 @@ public class CachorroController {
                         .toResponse(cachorroCriado, TutorMapper.toResumoResponse(tutor)));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CachorroResponse> atualizarCachorro(@PathVariable Long id, @Valid @RequestBody CriarCachorroRequest dto) {
+        Tutor tutor = buscarTutorPorIdCase.execute(dto.idTutor());
+        TutorResumoResponse tutorResumoResponse = TutorMapper.toResumoResponse(tutor);
+        Cachorro cachorroAtualizado = atualizarCachorroCase.execute(id, CachorroMapper.toDomain(dto));
+        return ResponseEntity.ok(CachorroMapper.toResponse(cachorroAtualizado, tutorResumoResponse));
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarCachorro(@PathVariable Long id){
+    public ResponseEntity<Void> deletarCachorro(@PathVariable Long id) {
         deletarCachorroCase.execute(id);
         return ResponseEntity.noContent().build();
     }
