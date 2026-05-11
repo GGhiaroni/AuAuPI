@@ -13,4 +13,5 @@ public interface TutorGateway {
     boolean existsById(Long id);
     boolean existsByCpf(String cpf);
     Optional<Tutor> findByCpf(String cpf);
+    List<Tutor> findByNomeParcial(String nome);
 }
