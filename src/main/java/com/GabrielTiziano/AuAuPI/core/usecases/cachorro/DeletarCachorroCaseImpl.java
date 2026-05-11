@@ -11,6 +11,9 @@ public class DeletarCachorroCaseImpl implements DeletarCachorroCase{
 
     @Override
     public void execute(Long id) {
+        if (!cachorroGateway.existsById(id)) {
+            throw new IllegalArgumentException("Cachorro de id " + id + " não encontrado.");
+        }
         cachorroGateway.deleteById(id);
     }
 }
