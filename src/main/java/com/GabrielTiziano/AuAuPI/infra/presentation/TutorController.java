@@ -32,15 +32,17 @@ public class TutorController {
     private final DeletarTutorPorIdCase deletarTutorPorIdCase;
     private final BuscarTutorPorCpfCase buscarTutorPorCpfCase;
     private final ListarCachorrosPorTutorCase listarCachorrosPorTutorCase;
+    private final BuscarTutorPorNomeCase buscarTutorPorNomeCase;
 
     @GetMapping
-    public ResponseEntity<List<TutorResponse>> listarTutores() {
-        List<Tutor> tutorList = listarTutoresCase.execute();
-        List<TutorResponse> tutorResponseList = tutorList.stream()
-                .map(TutorMapper::toResponse)
-                .toList();
+    public ResponseEntity<List<TutorResponse>> listarTutores(
+            @RequestParam(required = false) String nome
+    ) {
+        List<Tutor> tutores = (nome != null && !nome.isBlank())
+                ? buscarTutorPorNomeCase.execute(nome)
+                : listarTutoresCase.execute();
 
-        return ResponseEntity.ok(tutorResponseList);
+        return ResponseEntity.ok(tutores.stream().map(TutorMapper::toResponse).toList());
     }
 
     @GetMapping("/{id}")
