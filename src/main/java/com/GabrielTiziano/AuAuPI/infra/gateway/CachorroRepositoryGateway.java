@@ -1,8 +1,10 @@
 package com.GabrielTiziano.AuAuPI.infra.gateway;
 
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
+import com.GabrielTiziano.AuAuPI.core.enums.Porte;
 import com.GabrielTiziano.AuAuPI.core.gateway.CachorroGateway;
 import com.GabrielTiziano.AuAuPI.infra.mapper.CachorroMapper;
+import com.GabrielTiziano.AuAuPI.infra.persistence.CachorroEntity;
 import com.GabrielTiziano.AuAuPI.infra.persistence.CachorroRepository;
 import com.GabrielTiziano.AuAuPI.infra.persistence.TutorEntity;
 import com.GabrielTiziano.AuAuPI.infra.persistence.TutorRepository;
@@ -57,5 +59,13 @@ public class CachorroRepositoryGateway implements CachorroGateway {
     @Override
     public boolean existsById(Long id) {
         return cachorroRepository.existsById(id);
+    }
+
+    @Override
+    public List<Cachorro> findByPorte(Porte porte) {
+        List<CachorroEntity> cachorroEntityList = cachorroRepository.findByPorte(porte);
+        return cachorroEntityList.stream()
+                .map(CachorroMapper::toDomain)
+                .toList();
     }
 }
