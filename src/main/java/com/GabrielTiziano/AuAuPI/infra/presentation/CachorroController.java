@@ -4,6 +4,7 @@ import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
 import com.GabrielTiziano.AuAuPI.core.entities.Tutor;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.BuscarCachorroPorIdCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.CriarCachorroCase;
+import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.DeletarCachorroCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.ListarCachorrosCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.tutor.BuscarTutorPorIdCase;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarCachorroRequest;
@@ -29,6 +30,7 @@ public class CachorroController {
     private final BuscarTutorPorIdCase buscarTutorPorIdCase;
     private final ListarCachorrosCase listarCachorrosCase;
     private final BuscarCachorroPorIdCase buscarCachorroPorIdCase;
+    private final DeletarCachorroCase deletarCachorroCase;
 
     @GetMapping
     public ResponseEntity<List<CachorroResponse>> listarCachorros() {
@@ -59,5 +61,11 @@ public class CachorroController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CachorroMapper
                         .toResponse(cachorroCriado, TutorMapper.toResumoResponse(tutor)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarCachorro(@PathVariable Long id){
+        deletarCachorroCase.execute(id);
+        return ResponseEntity.noContent().build();
     }
 }
