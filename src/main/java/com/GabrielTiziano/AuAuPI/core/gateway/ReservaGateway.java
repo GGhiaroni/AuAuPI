@@ -15,5 +15,6 @@ public interface ReservaGateway {
     void deleteById(Long id);
     boolean existsById(Long id);
     List<Reserva> findByStatus(StatusReserva status);
+    List<Reserva> findByCheckin(LocalDate checkin);
     List<Reserva> findByPeriodo(LocalDate inicio, LocalDate fim);
 }
