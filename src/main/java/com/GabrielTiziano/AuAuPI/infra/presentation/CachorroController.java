@@ -3,6 +3,7 @@ package com.GabrielTiziano.AuAuPI.infra.presentation;
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
 import com.GabrielTiziano.AuAuPI.core.entities.Tutor;
 import com.GabrielTiziano.AuAuPI.core.enums.Porte;
+import com.GabrielTiziano.AuAuPI.core.enums.Sexo;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.*;
 import com.GabrielTiziano.AuAuPI.core.usecases.tutor.BuscarTutorPorIdCase;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarCachorroRequest;
@@ -29,12 +30,16 @@ public class CachorroController {
     private final DeletarCachorroCase deletarCachorroCase;
     private final AtualizarCachorroCase atualizarCachorroCase;
     private final ListarCachorrosPorPorteCase listarCachorrosPorPorteCase;
+    private final ListarCachorrosPorNomeCase listarCachorrosPorNomeCase;
+    private final ListarCachorrosPorRacaCase listarCachorrosPorRacaCase;
+    private final ListarCachorrosPorSexoCase listarCachorrosPorSexoCase;
 
     @GetMapping
     public ResponseEntity<List<CachorroResponse>> listarCachorros(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Porte porte,
-            @RequestParam(required = false) String raca
+            @RequestParam(required = false) String raca,
+            @RequestParam(required = false) Sexo sexo
     ) {
         List<Cachorro> cachorros;
 
@@ -44,6 +49,8 @@ public class CachorroController {
             cachorros = listarCachorrosPorNomeCase.execute(nome);
         } else if (raca != null && !raca.isBlank()) {
             cachorros = listarCachorrosPorRacaCase.execute(raca);
+        } else if (sexo != null) {
+            cachorros = listarCachorrosPorSexoCase.execute(sexo);
         } else {
             cachorros = listarCachorrosCase.execute();
         }
