@@ -37,4 +37,14 @@ public class ReservaBeanConfiguration {
     public ListarReservasPorStatusCase listarReservasPorStatusCase(ReservaGateway reservaGateway){
         return new ListarReservasPorStatusCaseImpl(reservaGateway);
     }
+
+    @Bean
+    public ListarReservasPorCheckinCase listarReservasPorCheckinCase(ReservaGateway reservaGateway){
+        return new ListarReservasPorCheckinCaseImpl(reservaGateway);
+    }
+
+    @Bean
+    public ListarReservasPorPeriodoCase listarReservasPorPeriodoCase(ReservaGateway reservaGateway){
+        return new ListarReservasPorPeriodoCaseImpl(reservaGateway);
+    }
 }
