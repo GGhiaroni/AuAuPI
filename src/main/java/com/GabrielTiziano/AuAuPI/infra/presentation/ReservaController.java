@@ -32,6 +32,8 @@ public class ReservaController {
     private final DeletarReservaPorIdCase deletarReservaPorIdCase;
     private final ListarReservasCase listarReservasCase;
     private final ListarReservasPorStatusCase listarReservasPorStatusCase;
+    private final ListarReservasPorPeriodoCase listarReservasPorPeriodoCase;
+    private final ListarReservasPorCheckinCase listarReservasPorCheckinCase;
 
     @GetMapping
     public ResponseEntity<List<ReservaResponse>> listarReservas(
