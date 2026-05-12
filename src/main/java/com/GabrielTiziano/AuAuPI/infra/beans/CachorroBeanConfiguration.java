@@ -42,4 +42,19 @@ public class CachorroBeanConfiguration {
     public ListarCachorrosPorPorteCase listarCachorrosPorPorteCase(CachorroGateway cachorroGateway){
         return new ListarCachorrosPorPorteCaseImpl(cachorroGateway);
     }
+
+    @Bean
+    public ListarCachorrosPorSexoCase listarCachorrosPorSexoCase(CachorroGateway cachorroGateway){
+        return new ListarCachorrosPorSexoCaseImpl(cachorroGateway);
+    }
+
+    @Bean
+    public ListarCachorrosPorRacaCase listarCachorrosPorRacaCase(CachorroGateway cachorroGateway){
+        return new ListarCachorrosPorRacaCaseImpl(cachorroGateway);
+    }
+
+    @Bean
+    public ListarCachorrosPorNomeCase listarCachorrosPorNomeCase(CachorroGateway cachorroGateway){
+        return new ListarCachorrosPorNomeCaseImpl(cachorroGateway);
+    }
 }
