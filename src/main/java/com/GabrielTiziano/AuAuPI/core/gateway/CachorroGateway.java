@@ -1,6 +1,8 @@
 package com.GabrielTiziano.AuAuPI.core.gateway;
 
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
+import com.GabrielTiziano.AuAuPI.core.enums.Porte;
+import com.GabrielTiziano.AuAuPI.core.enums.Sexo;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,4 +14,8 @@ public interface CachorroGateway {
     List<Cachorro> findByTutorId(Long idTutor);
     void deleteById(Long id);
     boolean existsById(Long id);
+    List<Cachorro> findByPorte(Porte porte);
+    List<Cachorro> findBySexo(Sexo sexo);
+    List<Cachorro> findByRaca(String raca);
+    List<Cachorro> findByNome(String nome);
 }

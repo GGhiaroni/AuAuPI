@@ -1,8 +1,11 @@
 package com.GabrielTiziano.AuAuPI.infra.gateway;
 
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
+import com.GabrielTiziano.AuAuPI.core.enums.Porte;
+import com.GabrielTiziano.AuAuPI.core.enums.Sexo;
 import com.GabrielTiziano.AuAuPI.core.gateway.CachorroGateway;
 import com.GabrielTiziano.AuAuPI.infra.mapper.CachorroMapper;
+import com.GabrielTiziano.AuAuPI.infra.persistence.CachorroEntity;
 import com.GabrielTiziano.AuAuPI.infra.persistence.CachorroRepository;
 import com.GabrielTiziano.AuAuPI.infra.persistence.TutorEntity;
 import com.GabrielTiziano.AuAuPI.infra.persistence.TutorRepository;
@@ -58,4 +61,37 @@ public class CachorroRepositoryGateway implements CachorroGateway {
     public boolean existsById(Long id) {
         return cachorroRepository.existsById(id);
     }
+
+    @Override
+    public List<Cachorro> findByPorte(Porte porte) {
+        List<CachorroEntity> cachorroEntityList = cachorroRepository.findByPorte(porte);
+        return cachorroEntityList.stream()
+                .map(CachorroMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Cachorro> findBySexo(Sexo sexo) {
+        return cachorroRepository.findBySexo(sexo)
+                .stream()
+                .map(CachorroMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Cachorro> findByRaca(String raca) {
+        return cachorroRepository.findByRacaContainingIgnoreCase(raca)
+                .stream()
+                .map(CachorroMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Cachorro> findByNome(String nome) {
+        return cachorroRepository.findByNomeContainingIgnoreCase(nome)
+                .stream()
+                .map(CachorroMapper::toDomain)
+                .toList();
+    }
+
 }
