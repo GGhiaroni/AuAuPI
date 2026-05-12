@@ -6,9 +6,7 @@ import com.GabrielTiziano.AuAuPI.core.enums.Porte;
 import com.GabrielTiziano.AuAuPI.core.enums.Sexo;
 import com.GabrielTiziano.AuAuPI.core.enums.StatusReserva;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.BuscarCachorroPorIdCase;
-import com.GabrielTiziano.AuAuPI.core.usecases.reserva.BuscarReservaPorIdCase;
-import com.GabrielTiziano.AuAuPI.core.usecases.reserva.CriarReservaCase;
-import com.GabrielTiziano.AuAuPI.core.usecases.reserva.DeletarReservaPorIdCase;
+import com.GabrielTiziano.AuAuPI.core.usecases.reserva.*;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarReservaRequest;
 import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResumoResponse;
 import com.GabrielTiziano.AuAuPI.infra.dto.response.ReservaResponse;
@@ -32,6 +30,8 @@ public class ReservaController {
     private final BuscarCachorroPorIdCase buscarCachorroPorIdCase;
     private final BuscarReservaPorIdCase buscarReservaPorIdCase;
     private final DeletarReservaPorIdCase deletarReservaPorIdCase;
+    private final ListarReservasCase listarReservasCase;
+    private final ListarReservasPorStatusCase listarReservasPorStatusCase;
 
     @GetMapping
     public ResponseEntity<List<ReservaResponse>> listarReservas(
