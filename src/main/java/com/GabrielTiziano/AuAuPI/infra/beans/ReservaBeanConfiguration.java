@@ -27,4 +27,14 @@ public class ReservaBeanConfiguration {
     public DeletarReservaPorIdCase deletarReservaPorIdCase(ReservaGateway reservaGateway){
         return new DeletarReservaPorIdCaseImpl(reservaGateway);
     }
+
+    @Bean
+    public ListarReservasCase listarReservasCase(ReservaGateway reservaGateway){
+        return new ListarReservasCaseImpl(reservaGateway);
+    }
+
+    @Bean
+    public ListarReservasPorStatusCase listarReservasPorStatusCase(ReservaGateway reservaGateway){
+        return new ListarReservasPorStatusCaseImpl(reservaGateway);
+    }
 }
