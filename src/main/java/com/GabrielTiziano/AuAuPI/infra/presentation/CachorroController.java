@@ -1,15 +1,19 @@
 package com.GabrielTiziano.AuAuPI.infra.presentation;
 
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
+import com.GabrielTiziano.AuAuPI.core.entities.Reserva;
 import com.GabrielTiziano.AuAuPI.core.entities.Tutor;
 import com.GabrielTiziano.AuAuPI.core.enums.Porte;
 import com.GabrielTiziano.AuAuPI.core.enums.Sexo;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.*;
+import com.GabrielTiziano.AuAuPI.core.usecases.reserva.ListarReservasPorCachorroIdCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.tutor.BuscarTutorPorIdCase;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarCachorroRequest;
 import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResponse;
-import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResumoResponse;
+import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResumoResponse;
+import com.GabrielTiziano.AuAuPI.infra.dto.response.ReservaResponse;
 import com.GabrielTiziano.AuAuPI.infra.mapper.CachorroMapper;
+import com.GabrielTiziano.AuAuPI.infra.mapper.ReservaMapper;
 import com.GabrielTiziano.AuAuPI.infra.mapper.TutorMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +37,7 @@ public class CachorroController {
     private final ListarCachorrosPorNomeCase listarCachorrosPorNomeCase;
     private final ListarCachorrosPorRacaCase listarCachorrosPorRacaCase;
     private final ListarCachorrosPorSexoCase listarCachorrosPorSexoCase;
+    private final ListarReservasPorCachorroIdCase listarReservasPorCachorroId;
 
     @GetMapping
     public ResponseEntity<List<CachorroResponse>> listarCachorros(
@@ -73,6 +78,20 @@ public class CachorroController {
         return ResponseEntity.ok(
                 CachorroMapper.toResponse(cachorro, TutorMapper.toResumoResponse(tutor))
         );
+    }
+
+    @GetMapping("/{id}/reservas")
+    public ResponseEntity<List<ReservaResponse>> listarReservasPorCachorro(@PathVariable Long id){
+        List<Reserva> reservaList = listarReservasPorCachorroId.execute(id);
+        Cachorro cachorro =  buscarCachorroPorIdCase.execute(id);
+        CachorroResumoResponse cachorroResumoResponse = CachorroMapper.toResumoResponse(cachorro);
+
+        List<ReservaResponse> reservaResponses =
+                reservaList.stream()
+                        .map(reserva -> ReservaMapper.toResponse(reserva, cachorroResumoResponse))
+                        .toList();
+
+        return ResponseEntity.ok(reservaResponses);
     }
 
     @PostMapping
