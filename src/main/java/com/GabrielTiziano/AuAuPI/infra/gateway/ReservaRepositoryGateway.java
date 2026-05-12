@@ -70,6 +70,14 @@ public class ReservaRepositoryGateway implements ReservaGateway {
     }
 
     @Override
+    public List<Reserva> findByCheckin(LocalDate checkin) {
+        return reservaRepository.findByDataCheckin(checkin)
+                .stream()
+                .map(ReservaMapper::toDomain)
+                .toList();
+    }
+
+    @Override
     public List<Reserva> findByPeriodo(LocalDate inicio, LocalDate fim) {
         return reservaRepository.findByPeriodo(inicio, fim)
                 .stream().map(ReservaMapper::toDomain)

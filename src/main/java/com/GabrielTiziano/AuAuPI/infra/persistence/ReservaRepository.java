@@ -20,4 +20,5 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
             @Param("inicio") LocalDate inicio,
             @Param("fim") LocalDate fim
     );
+    List<ReservaEntity> findByDataCheckin(LocalDate checkin);
 }
