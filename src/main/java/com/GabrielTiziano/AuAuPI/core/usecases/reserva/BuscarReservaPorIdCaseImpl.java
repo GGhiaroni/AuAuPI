@@ -3,10 +3,10 @@ package com.GabrielTiziano.AuAuPI.core.usecases.reserva;
 import com.GabrielTiziano.AuAuPI.core.entities.Reserva;
 import com.GabrielTiziano.AuAuPI.core.gateway.ReservaGateway;
 
-public class BuscarReservaPorIdImpl implements  BuscarReservaPorIdCase{
+public class BuscarReservaPorIdCaseImpl implements  BuscarReservaPorIdCase{
     private final ReservaGateway reservaGateway;
 
-    public BuscarReservaPorIdImpl(ReservaGateway reservaGateway) {
+    public BuscarReservaPorIdCaseImpl(ReservaGateway reservaGateway) {
         this.reservaGateway = reservaGateway;
     }
 
