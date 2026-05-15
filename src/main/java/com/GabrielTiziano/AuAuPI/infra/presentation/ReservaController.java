@@ -2,8 +2,6 @@ package com.GabrielTiziano.AuAuPI.infra.presentation;
 
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
 import com.GabrielTiziano.AuAuPI.core.entities.Reserva;
-import com.GabrielTiziano.AuAuPI.core.enums.Porte;
-import com.GabrielTiziano.AuAuPI.core.enums.Sexo;
 import com.GabrielTiziano.AuAuPI.core.enums.StatusReserva;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.BuscarCachorroPorIdCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.reserva.*;
@@ -35,6 +33,9 @@ public class ReservaController {
     private final ListarReservasPorPeriodoCase listarReservasPorPeriodoCase;
     private final ListarReservasPorCheckinCase listarReservasPorCheckinCase;
     private final ConfirmarReservaCase confirmarReservaCase;
+    private final IniciarReservaCase iniciarReservaCase;
+    private final FinalizarReservaCase finalizarReservaCase;
+    private final CancelarReservaCase cancelarReservaCase;
 
     @GetMapping
     public ResponseEntity<List<ReservaResponse>> listarReservas(
@@ -88,7 +89,7 @@ public class ReservaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/confirmar")
     public ResponseEntity<ReservaResponse> confirmarReserva(@PathVariable Long id) {
         Reserva reservaConfirmada = confirmarReservaCase.execute(id);
         Cachorro cachorro = buscarCachorroPorIdCase.execute(reservaConfirmada.idCachorro());
@@ -99,4 +100,41 @@ public class ReservaController {
                         CachorroMapper.toResumoResponse(cachorro)
                 ));
     }
+
+    @PatchMapping("/{id}/iniciar")
+    public ResponseEntity<ReservaResponse> iniciarReserva(@PathVariable Long id) {
+        Reserva reservaIniciada = iniciarReservaCase.execute(id);
+        Cachorro cachorro = buscarCachorroPorIdCase.execute(reservaIniciada.idCachorro());
+
+        return ResponseEntity.ok(
+                ReservaMapper.toResponse(
+                        reservaIniciada,
+                        CachorroMapper.toResumoResponse(cachorro)
+                ));
+    }
+
+    @PatchMapping("/{id}/finalizar")
+    public ResponseEntity<ReservaResponse> finalizarReserva(@PathVariable Long id) {
+        Reserva reservaFinalizada = finalizarReservaCase.execute(id);
+        Cachorro cachorro = buscarCachorroPorIdCase.execute(reservaFinalizada.idCachorro());
+
+        return ResponseEntity.ok(
+                ReservaMapper.toResponse(
+                        reservaFinalizada,
+                        CachorroMapper.toResumoResponse(cachorro)
+                ));
+    }
+
+    @PatchMapping("/{id}/cancelar")
+    public ResponseEntity<ReservaResponse> cancelarReserva(@PathVariable Long id) {
+        Reserva reservaCancelada = cancelarReservaCase.execute(id);
+        Cachorro cachorro = buscarCachorroPorIdCase.execute(reservaCancelada.idCachorro());
+
+        return ResponseEntity.ok(
+                ReservaMapper.toResponse(
+                        reservaCancelada,
+                        CachorroMapper.toResumoResponse(cachorro)
+                ));
+    }
+
 }
