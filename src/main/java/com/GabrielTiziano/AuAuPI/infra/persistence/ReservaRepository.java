@@ -21,4 +21,9 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
             @Param("fim") LocalDate fim
     );
     List<ReservaEntity> findByDataCheckin(LocalDate checkin);
+    @Query("""
+    SELECT r FROM ReservaEntity r
+    WHERE r.cachorro.tutor.id = :idTutor
+""")
+    List<ReservaEntity> findByTutorId(@Param("idTutor") Long idTutor);
 }

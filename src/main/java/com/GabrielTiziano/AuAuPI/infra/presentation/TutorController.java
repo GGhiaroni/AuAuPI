@@ -1,14 +1,15 @@
 package com.GabrielTiziano.AuAuPI.infra.presentation;
 
 import com.GabrielTiziano.AuAuPI.core.entities.Cachorro;
+import com.GabrielTiziano.AuAuPI.core.entities.Reserva;
 import com.GabrielTiziano.AuAuPI.core.entities.Tutor;
 import com.GabrielTiziano.AuAuPI.core.usecases.cachorro.ListarCachorrosPorTutorCase;
+import com.GabrielTiziano.AuAuPI.core.usecases.reserva.ListarReservasPorTutorCase;
 import com.GabrielTiziano.AuAuPI.core.usecases.tutor.*;
 import com.GabrielTiziano.AuAuPI.infra.dto.request.CriarTutorRequest;
-import com.GabrielTiziano.AuAuPI.infra.dto.response.CachorroResponse;
-import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResponse;
-import com.GabrielTiziano.AuAuPI.infra.dto.response.TutorResumoResponse;
+import com.GabrielTiziano.AuAuPI.infra.dto.response.*;
 import com.GabrielTiziano.AuAuPI.infra.mapper.CachorroMapper;
+import com.GabrielTiziano.AuAuPI.infra.mapper.ReservaMapper;
 import com.GabrielTiziano.AuAuPI.infra.mapper.TutorMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tutores")
@@ -33,6 +36,7 @@ public class TutorController {
     private final BuscarTutorPorCpfCase buscarTutorPorCpfCase;
     private final ListarCachorrosPorTutorCase listarCachorrosPorTutorCase;
     private final BuscarTutorPorNomeCase buscarTutorPorNomeCase;
+    private final ListarReservasPorTutorCase listarReservasPorTutorCase;
 
     @GetMapping
     public ResponseEntity<List<TutorResponse>> listarTutores(
@@ -85,6 +89,27 @@ public class TutorController {
 
         List<CachorroResponse> response = cachorroList.stream()
                 .map(cachorro -> CachorroMapper.toResponse(cachorro, tutorResumo))
+                .toList();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/reservas")
+    public ResponseEntity<List<ReservaResponse>> listarReservasDoTutor(@PathVariable Long id) {
+        List<Reserva> reservas = listarReservasPorTutorCase.execute(id);
+
+        Map<Long, CachorroResumoResponse> cachorrosPorId = listarCachorrosPorTutorCase.execute(id)
+                .stream()
+                .collect(Collectors.toMap(
+                        Cachorro::id,
+                        CachorroMapper::toResumoResponse
+                ));
+
+        List<ReservaResponse> response = reservas.stream()
+                .map(reserva -> ReservaMapper.toResponse(
+                        reserva,
+                        cachorrosPorId.get(reserva.idCachorro())
+                ))
                 .toList();
 
         return ResponseEntity.ok(response);

@@ -2,6 +2,7 @@ package com.GabrielTiziano.AuAuPI.infra.beans;
 
 import com.GabrielTiziano.AuAuPI.core.gateway.CachorroGateway;
 import com.GabrielTiziano.AuAuPI.core.gateway.ReservaGateway;
+import com.GabrielTiziano.AuAuPI.core.gateway.TutorGateway;
 import com.GabrielTiziano.AuAuPI.core.usecases.reserva.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,5 +47,10 @@ public class ReservaBeanConfiguration {
     @Bean
     public ListarReservasPorPeriodoCase listarReservasPorPeriodoCase(ReservaGateway reservaGateway){
         return new ListarReservasPorPeriodoCaseImpl(reservaGateway);
+    }
+
+    @Bean
+    public ListarReservasPorTutorCase listarReservasPorTutorCase(ReservaGateway reservaGateway, TutorGateway tutorGateway){
+        return new ListarReservasPorTutorCaseImpl(reservaGateway, tutorGateway);
     }
 }
