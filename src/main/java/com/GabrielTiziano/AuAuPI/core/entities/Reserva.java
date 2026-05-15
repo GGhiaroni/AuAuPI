@@ -33,4 +33,46 @@ public record Reserva (
         return new Reserva(id, idCachorro, dataCheckin, dataCheckout,
                 StatusReserva.CONFIRMADA, valorDiaria, observacoes);
     }
+
+    public Reserva iniciar(){
+        if(status != StatusReserva.CONFIRMADA) {
+            throw new IllegalStateException(
+                    "Reserva " + id + " não pode ser iniciada: status atual é " + status +
+                            ". Só é possível iniciar reservas com status CONFIRMADA."
+            );
+        }
+
+        return new Reserva(
+                id, idCachorro, dataCheckin, dataCheckout,
+                StatusReserva.EM_ANDAMENTO, valorDiaria, observacoes
+        );
+    }
+
+    public Reserva finalizar(){
+        if(status != StatusReserva.EM_ANDAMENTO) {
+            throw new IllegalStateException(
+                    "Reserva " + id + " não pode ser finalizada: status atual é " + status +
+                            ". Só é possível finalizar reservas com status EM_ANDAMENTO."
+            );
+        }
+
+        return new Reserva(
+                id, idCachorro, dataCheckin, dataCheckout,
+                StatusReserva.FINALIZADA, valorDiaria, observacoes
+        );
+    }
+
+    public Reserva cancelar(){
+        if (status == StatusReserva.FINALIZADA) {
+            throw new IllegalStateException("Reserva já finalizada não pode ser cancelada.");
+        }
+        if (status == StatusReserva.CANCELADA) {
+            throw new IllegalStateException("Reserva já está cancelada.");
+        }
+
+        return new Reserva(
+                id, idCachorro, dataCheckin, dataCheckout,
+                StatusReserva.CANCELADA, valorDiaria, observacoes
+        );
+    }
 }

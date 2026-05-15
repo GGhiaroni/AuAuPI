@@ -58,4 +58,19 @@ public class ReservaBeanConfiguration {
     public ConfirmarReservaCase confirmarReservaCase(ReservaGateway reservaGateway) {
         return new ConfirmarReservaCaseImpl(reservaGateway);
     }
+
+    @Bean
+    public IniciarReservaCase iniciarReservaCase(ReservaGateway reservaGateway){
+        return new IniciarReservaCaseImpl(reservaGateway);
+    }
+
+    @Bean
+    public FinalizarReservaCase finalizarReservaCase(ReservaGateway reservaGateway){
+        return new FinalizarReservaCaseImpl(reservaGateway);
+    }
+
+    @Bean
+    public CancelarReservaCase cancelarReservaCase(ReservaGateway reservaGateway){
+        return new CancelarReservaCaseImpl(reservaGateway);
+    }
 }
