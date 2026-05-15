@@ -17,4 +17,5 @@ public interface ReservaGateway {
     List<Reserva> findByStatus(StatusReserva status);
     List<Reserva> findByCheckin(LocalDate checkin);
     List<Reserva> findByPeriodo(LocalDate inicio, LocalDate fim);
+    List<Reserva> findByTutorId(Long id);
 }

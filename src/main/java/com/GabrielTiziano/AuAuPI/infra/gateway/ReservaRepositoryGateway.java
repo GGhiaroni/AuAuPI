@@ -83,4 +83,12 @@ public class ReservaRepositoryGateway implements ReservaGateway {
                 .stream().map(ReservaMapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<Reserva> findByTutorId(Long id) {
+        return reservaRepository.findByTutorId(id)
+                .stream()
+                .map(ReservaMapper::toDomain)
+                .toList();
+    }
 }
