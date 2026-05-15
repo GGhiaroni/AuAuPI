@@ -22,4 +22,15 @@ public record Reserva (
     public BigDecimal calcularValorTotal() {
         return valorDiaria.multiply(BigDecimal.valueOf(calcularQuantidadeDiarias()));
     }
+
+    public Reserva confirmar() {
+        if (status != StatusReserva.PENDENTE) {
+            throw new IllegalStateException(
+                    "Reserva " + id + " não pode ser confirmada: status atual é " + status +
+                            ". Só é possível confirmar reservas com status PENDENTE."
+            );
+        }
+        return new Reserva(id, idCachorro, dataCheckin, dataCheckout,
+                StatusReserva.CONFIRMADA, valorDiaria, observacoes);
+    }
 }

@@ -34,6 +34,7 @@ public class ReservaController {
     private final ListarReservasPorStatusCase listarReservasPorStatusCase;
     private final ListarReservasPorPeriodoCase listarReservasPorPeriodoCase;
     private final ListarReservasPorCheckinCase listarReservasPorCheckinCase;
+    private final ConfirmarReservaCase confirmarReservaCase;
 
     @GetMapping
     public ResponseEntity<List<ReservaResponse>> listarReservas(
@@ -85,5 +86,17 @@ public class ReservaController {
     public ResponseEntity<Void> deletarReserva(@PathVariable Long id) {
         deletarReservaPorIdCase.execute(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ReservaResponse> confirmarReserva(@PathVariable Long id) {
+        Reserva reservaConfirmada = confirmarReservaCase.execute(id);
+        Cachorro cachorro = buscarCachorroPorIdCase.execute(reservaConfirmada.idCachorro());
+
+        return ResponseEntity.ok(
+                ReservaMapper.toResponse(
+                        reservaConfirmada,
+                        CachorroMapper.toResumoResponse(cachorro)
+                ));
     }
 }

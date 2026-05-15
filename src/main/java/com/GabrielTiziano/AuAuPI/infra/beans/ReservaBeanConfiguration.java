@@ -53,4 +53,9 @@ public class ReservaBeanConfiguration {
     public ListarReservasPorTutorCase listarReservasPorTutorCase(ReservaGateway reservaGateway, TutorGateway tutorGateway){
         return new ListarReservasPorTutorCaseImpl(reservaGateway, tutorGateway);
     }
+
+    @Bean
+    public ConfirmarReservaCase confirmarReservaCase(ReservaGateway reservaGateway) {
+        return new ConfirmarReservaCaseImpl(reservaGateway);
+    }
 }
