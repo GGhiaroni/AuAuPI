@@ -1,5 +1,6 @@
 package com.GabrielTiziano.AuAuPI.core.gateway;
 
+import com.GabrielTiziano.AuAuPI.core.entities.CachorroFrequente;
 import com.GabrielTiziano.AuAuPI.core.entities.Reserva;
 import com.GabrielTiziano.AuAuPI.core.enums.StatusReserva;
 
@@ -18,4 +19,5 @@ public interface ReservaGateway {
     List<Reserva> findByCheckin(LocalDate checkin);
     List<Reserva> findByPeriodo(LocalDate inicio, LocalDate fim);
     List<Reserva> findByTutorId(Long id);
+    List<CachorroFrequente> listarCachorrosFrequentes(int limite);
 }
