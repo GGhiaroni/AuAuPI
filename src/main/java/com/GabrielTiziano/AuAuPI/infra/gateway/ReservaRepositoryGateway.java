@@ -1,11 +1,13 @@
 package com.GabrielTiziano.AuAuPI.infra.gateway;
 
+import com.GabrielTiziano.AuAuPI.core.entities.CachorroFrequente;
 import com.GabrielTiziano.AuAuPI.core.entities.Reserva;
 import com.GabrielTiziano.AuAuPI.core.enums.StatusReserva;
 import com.GabrielTiziano.AuAuPI.core.gateway.ReservaGateway;
 import com.GabrielTiziano.AuAuPI.infra.mapper.ReservaMapper;
 import com.GabrielTiziano.AuAuPI.infra.persistence.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -90,5 +92,10 @@ public class ReservaRepositoryGateway implements ReservaGateway {
                 .stream()
                 .map(ReservaMapper::toDomain)
                 .toList();
+    }
+
+    @Override
+    public List<CachorroFrequente> listarCachorrosFrequentes(int limite) {
+        return reservaRepository.findCachorrosFrequentes(PageRequest.of(0, limite));
     }
 }
