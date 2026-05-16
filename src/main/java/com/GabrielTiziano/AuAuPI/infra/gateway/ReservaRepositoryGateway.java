@@ -2,6 +2,7 @@ package com.GabrielTiziano.AuAuPI.infra.gateway;
 
 import com.GabrielTiziano.AuAuPI.core.entities.CachorroFrequente;
 import com.GabrielTiziano.AuAuPI.core.entities.Reserva;
+import com.GabrielTiziano.AuAuPI.core.entities.TutorFrequente;
 import com.GabrielTiziano.AuAuPI.core.enums.StatusReserva;
 import com.GabrielTiziano.AuAuPI.core.gateway.ReservaGateway;
 import com.GabrielTiziano.AuAuPI.infra.mapper.ReservaMapper;
@@ -97,5 +98,10 @@ public class ReservaRepositoryGateway implements ReservaGateway {
     @Override
     public List<CachorroFrequente> listarCachorrosFrequentes(int limite) {
         return reservaRepository.findCachorrosFrequentes(PageRequest.of(0, limite));
+    }
+
+    @Override
+    public List<TutorFrequente> listarTutoresFrequentes(int limite) {
+        return reservaRepository.findTutoresFrequentes(PageRequest.of(0, limite));
     }
 }

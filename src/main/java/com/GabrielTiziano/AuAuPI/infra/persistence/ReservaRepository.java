@@ -1,6 +1,7 @@
 package com.GabrielTiziano.AuAuPI.infra.persistence;
 
 import com.GabrielTiziano.AuAuPI.core.entities.CachorroFrequente;
+import com.GabrielTiziano.AuAuPI.core.entities.TutorFrequente;
 import com.GabrielTiziano.AuAuPI.core.enums.StatusReserva;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -43,4 +44,20 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
     ORDER BY COUNT(r) DESC
 """)
     List<CachorroFrequente> findCachorrosFrequentes(Pageable pageable);
+    @Query("""
+    SELECT new com.GabrielTiziano.AuAuPI.core.entities.TutorFrequente(
+        t.id, t.nome, t.telefone, COUNT(r)
+    )
+    FROM ReservaEntity r
+    JOIN r.cachorro c
+    JOIN c.tutor t
+    WHERE r.status IN (
+        com.GabrielTiziano.AuAuPI.core.enums.StatusReserva.CONFIRMADA,
+        com.GabrielTiziano.AuAuPI.core.enums.StatusReserva.EM_ANDAMENTO,
+        com.GabrielTiziano.AuAuPI.core.enums.StatusReserva.FINALIZADA
+    )
+    GROUP BY t.id, t.nome, t.telefone
+    ORDER BY COUNT(r) DESC
+""")
+    List<TutorFrequente> findTutoresFrequentes(Pageable pageable);
 }
