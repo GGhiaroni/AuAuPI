@@ -13,4 +13,9 @@ public class RelatorioBeanConfiguration {
             ReservaGateway reservaGateway) {
         return new ListarCachorrosFrequentesCaseImpl(reservaGateway);
     }
+
+    @Bean
+    public ListarTutoresFrequentesCase listarTutoresFrequentesCase(ReservaGateway reservaGateway){
+        return new ListarTutoresFrequentesCaseImpl(reservaGateway);
+    }
 }
