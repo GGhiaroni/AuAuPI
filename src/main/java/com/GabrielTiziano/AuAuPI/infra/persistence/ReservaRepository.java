@@ -60,4 +60,7 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
     ORDER BY COUNT(r) DESC
 """)
     List<TutorFrequente> findTutoresFrequentes(Pageable pageable);
+    long countByStatus(StatusReserva status);
+    long countByDataCheckinAndStatus(LocalDate dataCheckin, StatusReserva status);
+    long countByDataCheckoutAndStatus(LocalDate dataCheckout, StatusReserva status);
 }

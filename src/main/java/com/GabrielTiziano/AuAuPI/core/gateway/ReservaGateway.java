@@ -22,4 +22,7 @@ public interface ReservaGateway {
     List<Reserva> findByTutorId(Long id);
     List<CachorroFrequente> listarCachorrosFrequentes(int limite);
     List<TutorFrequente> listarTutoresFrequentes(int limite);
+    long contarPorStatus(StatusReserva status);
+    long contarCheckInsDoDia(LocalDate dia, StatusReserva status);
+    long contarCheckOutsDoDia(LocalDate dia, StatusReserva status);
 }

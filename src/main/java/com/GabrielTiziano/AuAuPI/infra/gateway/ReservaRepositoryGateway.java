@@ -104,4 +104,19 @@ public class ReservaRepositoryGateway implements ReservaGateway {
     public List<TutorFrequente> listarTutoresFrequentes(int limite) {
         return reservaRepository.findTutoresFrequentes(PageRequest.of(0, limite));
     }
+
+    @Override
+    public long contarPorStatus(StatusReserva status) {
+        return reservaRepository.countByStatus(status);
+    }
+
+    @Override
+    public long contarCheckInsDoDia(LocalDate dia, StatusReserva status) {
+        return reservaRepository.countByDataCheckinAndStatus(dia, status);
+    }
+
+    @Override
+    public long contarCheckOutsDoDia(LocalDate dia, StatusReserva status) {
+        return reservaRepository.countByDataCheckoutAndStatus(dia, status);
+    }
 }
